@@ -1,0 +1,14 @@
+@use 'variables';
+
+:root{
+  --colorBlue: blue;
+}
+
+body{
+  color: var(--colorBlue);
+  background-color: variables.$bg-peach;
+}
+
+main{
+  display: flex;
+}
