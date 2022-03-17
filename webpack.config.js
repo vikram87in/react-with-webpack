@@ -6,7 +6,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader'
         /* without additional settings, it refers to the .babelrc. It also looks at the .browserslistrc file to see how much backward compatibility to provide*/
@@ -24,6 +24,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   },
   plugins: [new MCEP()],
   devServer: {

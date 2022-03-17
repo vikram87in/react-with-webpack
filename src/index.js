@@ -1,5 +1,5 @@
-import './css/styles.scss'
-console.log('hiiiii');
-const x = { a: 1 };
-const y = { ...x, b: 2 };
-console.log(y);
+import { render } from 'react-dom';
+import App from './components/App';
+import './css/styles.scss';
+
+render(<App />, document.getElementById('root'));
