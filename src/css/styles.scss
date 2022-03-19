@@ -1,4 +1,5 @@
 @use 'variables';
+@use 'hero';
 
 :root{
   --colorBlue: green;
@@ -11,4 +12,12 @@ body{
 
 main{
   display: flex;
+}
+
+ul{
+  list-style-image: url('../images/sword-32x32.png');
+}
+
+img{
+    max-height: 200px;
 }

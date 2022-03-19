@@ -1,4 +1,5 @@
 const MCEP = require('mini-css-extract-plugin');
+const miniSVG = require('mini-svg-data-uri');
 const path = require('path');
 const mode = process.env.NODE_ENV == 'production' ? 'production' : 'development';
 module.exports = {
@@ -17,12 +18,41 @@ module.exports = {
         use: [
           // The order below is important. Works in the reverse order.
           MCEP.loader,          //3. creates a separate css file instead of injecting into the DOM. Either use this or style-loader, but not both.
-          // 'style-loader',                    // 3.inject the css into the DOM (head probably)
-          'css-loader',                         // 2. converts the css into js
-          'postcss-loader',                      // looks at the .browserslistrc file
+          // 'style-loader',                    // 4.inject the css into the DOM (head probably)
+          'css-loader',                         // 3. converts the css into js
+          'postcss-loader',                      // 2. looks at the .browserslistrc file
           'sass-loader'                        // 1. compiles the scss into css
         ]
-      }
+      },
+      {
+        test: /\.jpe?g$/,
+        type: 'asset/resource',  // emits a file in dist.
+        generator: {
+          filename: 'images/[hash][ext][query]' // will emit in dist/images folder
+        }
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/inline', // doesnt emit a file. writes it inline in the css file
+        generator: {
+          dataUrl: content => {
+            content = content.toString();
+            return miniSVG(content);
+          }
+        }
+      },
+      {
+        test: /\.png$|\.gif$/,
+        type: 'asset', // upto a particular limit, it acts as asset/inline. If file size bigger, acts as asset/resource
+        generator: {
+          filename: 'images/[hash][ext][query]'
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024 // 4kb; default is 8kb
+          }
+        }
+      },
     ]
   },
   resolve: {
