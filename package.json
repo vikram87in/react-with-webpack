@@ -28,12 +28,9 @@
   },
   "scripts": {
     "start": "webpack serve",
-    "predev": "npm run clean-dist",
-    "prebuild": "npm run clean-dist",
     "build": "webpack --mode=production",
     "dev": "webpack",
-    "watch": "webpack --watch",
-    "clean-dist": "rimraf ./dist"
+    "watch": "webpack --watch"
   },
   "keywords": [],
   "author": "",

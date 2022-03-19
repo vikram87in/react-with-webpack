@@ -5,6 +5,9 @@ const path = require('path');
 const mode = process.env.NODE_ENV == 'production' ? 'production' : 'development';
 module.exports = {
   mode,
+  output: {
+    clean: true // use this option and there is no need to clean dist manually or use clean-webpack-plugin
+  },
   module: {
     rules: [
       {
