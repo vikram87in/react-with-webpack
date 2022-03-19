@@ -1,8 +1,22 @@
-const MCEP = require('mini-css-extract-plugin');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const miniSVG = require('mini-svg-data-uri');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const path = require('path');
 const mode = process.env.NODE_ENV == 'production' ? 'production' : 'development';
+const plugins = [
+  new MiniCSSExtractPlugin(),
+  new HtmlWebpackPlugin(
+    {
+      template: './src/index.html'
+    }
+  )
+]
+
+if (process.env.SERVE) {
+  plugins.push(new ReactRefreshWebpackPlugin());
+}
+
 module.exports = {
   mode,
   output: {
@@ -21,7 +35,7 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           // The order below is important. Works in the reverse order.
-          MCEP.loader,          //3. creates a separate css file instead of injecting into the DOM. Either use this or style-loader, but not both.
+          MiniCSSExtractPlugin.loader,          //3. creates a separate css file instead of injecting into the DOM. Either use this or style-loader, but not both.
           // 'style-loader',                    // 4.inject the css into the DOM (head probably)
           'css-loader',                         // 3. converts the css into js
           'postcss-loader',                      // 2. looks at the .browserslistrc file
@@ -62,14 +76,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  plugins: [
-    new MCEP(),
-    new HtmlWebpackPlugin(
-      {
-        template: './src/index.html'
-      }
-    )
-  ],
+  plugins,
   devServer: {
     static: path.join(__dirname, 'dist')
   },
