@@ -1,5 +1,6 @@
 const MCEP = require('mini-css-extract-plugin');
 const miniSVG = require('mini-svg-data-uri');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const mode = process.env.NODE_ENV == 'production' ? 'production' : 'development';
 module.exports = {
@@ -58,7 +59,14 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  plugins: [new MCEP()],
+  plugins: [
+    new MCEP(),
+    new HtmlWebpackPlugin(
+      {
+        template: './src/index.html'
+      }
+    )
+  ],
   devServer: {
     static: path.join(__dirname, 'dist')
   },
